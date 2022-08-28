@@ -1,36 +1,46 @@
-public class EmployeeWages{
+class EmployeeWages {
 
-    public static void main(String args[]) {
+    private static final int IS_FULL_TIME = 1;
+    private static final int IS_PART_TIME = 2;
 
-        final int PART_TIME = 1;
-        final int FULL_TIME = 2;
-        final int Wage_Per_Hr = 20;
-        final int Working_Days = 20;
+    public static int calculateEmpWageForCompany(String company, int empRate, int numOFDays, int maxHours) {
 
-        int totalWage = 0;
-        for(int day=1;day<=Working_Days;day++)
-        {
+        System.out.println("----- Welcome to Employee Wage Computation! -----");
+        int empHrs=0, empWagePerMonth = 0, totalWorkingdays=0, totalEmpHours = 0;
 
-            int empType = (int) (Math.random() * 100) % 3;
-            int workingHours = 0;
-            switch (empType)
-            {
-                case FULL_TIME:
-                    workingHours = 8;
+        while(totalEmpHours <= maxHours && totalWorkingdays < numOFDays) {
+
+            totalWorkingdays ++;
+            int empType = (int)Math.floor(Math.random() * 10) % 3;
+
+            switch(empType) {
+                case IS_FULL_TIME:
+                    System.out.println("Employee Doing Full Time:");
+                    empHrs = 8;
                     break;
-
-                case PART_TIME:
-                    workingHours = 4;
+                case IS_PART_TIME:
+                    System.out.println("Employee Doing Part Time:");
+                    empHrs = 4;
                     break;
-
                 default:
+                    System.out.println("Employee is Absent:");
+                    empHrs = 0;
             }
 
-            int wage = workingHours * Wage_Per_Hr;
-            System.out.println("Day " + day + " Wage is : " + wage);
-            totalWage += wage;
-
+            totalEmpHours += empHrs;
+            int empWagePerDay = empHrs * empRate;
+            empWagePerMonth += empWagePerDay;
+            System.out.println("Emp Wage Per Day : "+empWagePerDay);
         }
-           System.out.println("Total wage for a month is " + totalWage);
+
+        System.out.println("Emp Wage Per Month for Company: "+company+" is : "+empWagePerMonth);
+        return empWagePerMonth;
     }
+
+    public static void main(String[] args) {
+        calculateEmpWageForCompany("Firoz", 20, 2, 10);
+        calculateEmpWageForCompany("Shaik", 10, 4, 20);
+
+    }
+
 }
